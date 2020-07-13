@@ -19,6 +19,8 @@
 
 <script>
 
+    import { mapState, mapGetters, mapActions } from 'vuex'
+
     export default {
         data () {
             return {
@@ -26,25 +28,30 @@
             }
         },
 
-        computed: {
-            products () {
-                return this.$store.getters.products
-            },
 
-            productIsInStock () {
-                return this.$store.getters.productIsInStock
-            }
+        computed: {
+            // ES7 Spread Operator
+             ...mapState({
+                products: state => state.products
+            }),
+
+            ...mapGetters({
+                productIsInStock: 'productIsInStock'
+            })
+
         },
 
         methods: {
-            addProductToCart (product) {
-                this.$store.dispatch('addProductToCart', product)
-            },
+            // ES7 Spread Operator
+            ...mapActions({
+                fetchProducts: 'fetchProducts',
+                addProductToCart: 'addProductToCart'
+            })
         },
 
         created () {
             this.loading = true
-            this.$store.dispatch('fetchProducts')
+            this.fetchProducts()
             .then(()=> this.loading = false)
         }
     }
