@@ -32,7 +32,7 @@
         computed: {
             // ES7 Spread Operator
              ...mapState({
-                products: state => state.products
+                products: state => state.products.items
             }),
 
             ...mapGetters({
